@@ -3,19 +3,22 @@
 ![CI](https://github.com/harshad990/esp32-lm35-temp/actions/workflows/platformio-ci.yml/badge.svg)
 ![](https://img.shields.io/github/v/release/harshad990/esp32-lm35-temp)
 
-This PlatformIO project reads temperature from an LM35 sensor and displays it
-on a 128x64 SSD1306 OLED connected to an ESP32 development board.
+This PlatformIO project reads local room temperature from an LM35 sensor and
+shows it together with online weather temperature on a 128x64 SSD1306 OLED
+connected to an ESP32 development board.
 
-The sketch measures the LM35 analog output on ADC pin GPIO34, converts the
-sensor voltage to Celsius, computes Fahrenheit, and shows both current and
-smoothed temperature values on the OLED screen.
+The sketch reads the LM35 analog output on ADC pin GPIO34, converts the
+sensor voltage to Celsius, applies smoothing, and displays both the room
+temperature and current weather temperature on the OLED screen.
 
 ## Features
 
 - LM35 temperature reading on ESP32 ADC pin GPIO34
-- OLED display with current temperature in °C and °F
-- Rolling average smoothing across 8 samples
-- Refreshes every 1 second
+- Exponential smoothing for stable LM35 temperature display
+- OLED display with greeting, time, date, room temperature, and weather
+  temperature
+- Weather temperature fetched from Open-Meteo every 15 minutes
+- Refreshes display every 1 second
 
 ## Wiring
 
