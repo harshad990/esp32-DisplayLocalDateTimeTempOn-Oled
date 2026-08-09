@@ -1,9 +1,8 @@
-# ESP32 LM35 Temperature Display
-
+# ESP32 Display Local Date, Timestamps On Olde
 ![CI](https://github.com/harshad990/esp32-lm35-temp/actions/workflows/platformio-ci.yml/badge.svg)
 ![](https://img.shields.io/github/v/release/harshad990/esp32-lm35-temp)
 
-This PlatformIO project reads temperature from an LM35 sensor and displays it
+This Platform IO project reads temperature from an LM35 sensor and displays it
 on a 128x64 SSD1306 OLED connected to an ESP32 development board.
 
 The sketch measures the LM35 analog output on ADC pin GPIO34, converts the
@@ -40,7 +39,7 @@ The OLED is configured for the I2C address `0x3C`.
 
 ## Build and Upload
 
-Use PlatformIO from the project root:
+Use Platform IO from the project root:
 
 ```sh
 pio run
