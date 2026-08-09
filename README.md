@@ -1,41 +1,60 @@
-# ESP32 SSD1306 Local Clock
+# ESP32 LM35 Temperature Display
 
-This PlatformIO project displays a time-based greeting, the local time, date,
-and current London, Ontario temperature on a 128x64 SSD1306 OLED. Time is
-synchronized over Wi-Fi using NTP and is configured for the `America/Toronto`
-timezone, including daylight-saving time. Weather data comes from Open-Meteo
-and refreshes every 15 minutes.
+![CI](https://github.com/harshad990/esp32-lm35-temp/actions/workflows/platformio-ci.yml/badge.svg)
+![](https://img.shields.io/github/v/release/harshad990/esp32-lm35-temp)
+
+This PlatformIO project reads temperature from an LM35 sensor and displays it
+on a 128x64 SSD1306 OLED connected to an ESP32 development board.
+
+The sketch measures the LM35 analog output on ADC pin GPIO34, converts the
+sensor voltage to Celsius, computes Fahrenheit, and shows both current and
+smoothed temperature values on the OLED screen.
+
+## Features
+
+- LM35 temperature reading on ESP32 ADC pin GPIO34
+- OLED display with current temperature in °C and °F
+- Rolling average smoothing across 8 samples
+- Refreshes every 1 second
 
 ## Wiring
 
-| SSD1306 | ESP32 |
-|---------|-------|
-| VCC     | 3.3 V |
-| GND     | GND |
-| SDA     | GPIO 21 |
-| SCL     | GPIO 22 |
+### LM35 to ESP32
 
-The display is configured for the common I2C address `0x3C`.
+| LM35 pin | ESP32 pin |
+|----------|-----------|
+| VCC      | 3.3V      |
+| GND      | GND       |
+| Vout     | GPIO34    |
 
-## Wi-Fi configuration
+### SSD1306 OLED to ESP32
 
-Copy `include/secrets.example.h` to `include/secrets.h`, then enter the Wi-Fi
-network name and password. The real `secrets.h` file is ignored by Git.
+| OLED pin | ESP32 pin |
+|----------|-----------|
+| VCC      | 3.3V      |
+| GND      | GND       |
+| SDA      | GPIO21    |
+| SCL      | GPIO22    |
 
-The ESP32 connects automatically at startup and retries every few seconds if
-the network is temporarily unavailable. ESP32 boards require a 2.4 GHz Wi-Fi
-network. For router security, WPA2 or WPA2/WPA3 compatibility mode is the most
-widely compatible choice.
+The OLED is configured for the I2C address `0x3C`.
 
-If the OLED reports that the network is visible but connection fails, configure
-the router's 2.4 GHz band for WPA2-Personal with AES, make Protected Management
-Frames optional, and check that MAC filtering or access control is not blocking
-the ESP32.
+## Build and Upload
 
-Build and upload with PlatformIO:
+Use PlatformIO from the project root:
 
 ```sh
 pio run
 pio run --target upload
 ```
+
+## Release
+
+This repository is tagged at `v1.0.0` for the initial stable snapshot. See the
+GitHub Releases page for release notes.
+
+## Notes
+
+- The ESP32 ADC is configured for 12-bit resolution and 11dB attenuation.
+- Ensure the LM35 is powered from 3.3V, not 5V, when using the ESP32.
+- If the OLED does not display, verify I2C wiring and confirm the display address.
 
